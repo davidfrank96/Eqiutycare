@@ -16,7 +16,15 @@ exports.aboutpage = async(req, res) =>{
 
 exports.servicespage = async(req, res) =>{
     try {
-        res.render('services', {title: 'Equitycare Global | About'});
+        res.render('services', {title: 'Equitycare Global | Services'});
+    } catch (error) {
+        res.status(500).send({message: error.message || "Error occured"});
+    }
+}
+
+exports.faqpage = async(req, res) =>{
+    try {
+        res.render('faq', {title: 'Equitycare Global | FAQ'});
     } catch (error) {
         res.status(500).send({message: error.message || "Error occured"});
     }

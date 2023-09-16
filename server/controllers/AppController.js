@@ -13,3 +13,11 @@ exports.aboutpage = async(req, res) =>{
         res.status(500).send({message: error.message || "Error occured"});
     }
 }
+
+exports.servicespage = async(req, res) =>{
+    try {
+        res.render('services', {title: 'Equitycare Global | About'});
+    } catch (error) {
+        res.status(500).send({message: error.message || "Error occured"});
+    }
+}

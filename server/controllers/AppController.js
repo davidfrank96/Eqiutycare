@@ -29,3 +29,11 @@ exports.faqpage = async(req, res) =>{
         res.status(500).send({message: error.message || "Error occured"});
     }
 }
+
+exports.contactpage = async(req, res) =>{
+    try {
+        res.render('contact', {title: 'Equitycare Global | Contact'});
+    } catch (error) {
+        res.status(500).send({message: error.message || "Error occured"});
+    }
+}

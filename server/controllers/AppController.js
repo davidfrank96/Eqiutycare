@@ -37,3 +37,11 @@ exports.contactpage = async(req, res) =>{
         res.status(500).send({message: error.message || "Error occured"});
     }
 }
+
+exports.ratepage = async(req, res) =>{
+    try {
+        res.render('our-rates', {title: 'Equitycare Global | Our Rates'});
+    } catch (error) {
+        res.status(500).send({message: error.message || "Error occured"});
+    }
+}

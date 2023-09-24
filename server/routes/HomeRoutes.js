@@ -7,5 +7,6 @@ const AppController = require('../controllers/AppController')
  */
 router.get('/', AppController.homepage)
 router.get('/about', AppController.aboutpage)
+router.get('/services', AppController.servicespage)
 
 module.exports = router

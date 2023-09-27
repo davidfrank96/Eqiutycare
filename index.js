@@ -21,8 +21,8 @@ app.set('layout', './layouts/main')
 app.set("view engine", "ejs")
 
 const homeRoutes = require('./server/routes/HomeRoutes.js')
-const apiRoutes = require('./server/routes/ApiRoutes.js')
+const authRoutes = require('./server/routes/AuthRoutes.js')
 app.use("/", homeRoutes)
-app.use("/api", apiRoutes)
+app.use("/auth", authRoutes)
 
 app.listen(port, ()=> console.log(`listening to port ${port}`))

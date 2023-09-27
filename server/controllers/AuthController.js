@@ -1,5 +1,4 @@
 const nodemailer = require('nodemailer');
-const mysql = require('mysql2/promise');
 const fs = require('fs');
 const util = require('util');
 const path = require('path');
@@ -9,21 +8,12 @@ const destinationFolder = path.join(__dirname, relativePathToServer, 'uploads');
 const upload = multer({ dest: destinationFolder }); // Configure multer with the upload destination folder
 const readFile = util.promisify(fs.readFile);
 const logger = require('winston');
-require('dotenv').config()
 const bcrypt = require('bcrypt');
-
+const dbPool = require('../models/db');
 // Generate a random OTP
 function generateOTP() {
   return Math.floor(1000 + Math.random() * 9000); // Generate a 4-digit OTP
 }
-
-// Create a MySQL connection pool
-const dbPool = mysql.createPool({
-  host: process.env.DB_HOST,
-  user:  process.env.DB_USER,
-  password:  process.env.DB_PASSWORD,
-  database:  process.env.DB_NAME,
-});
 
 // Create a nodemailer transporter
 const transporter = nodemailer.createTransport({
@@ -345,7 +335,7 @@ exports.caregiverLogin = async (req, res) => {
     
     const otp = generateOTP();
 
-    await dbPool.execute('UPDATE clients SET otp = ? WHERE email = ?', [otp, email]);
+    await dbPool.execute('UPDATE caregivers SET otp = ? WHERE email = ?', [otp, email]);
 
     const mailOptions = {
       from: process.env.MAIL_USER,
@@ -376,14 +366,14 @@ exports.verifyCaregiverOTP = async (req, res) => {
     const { email, otp } = req.body;
 
     // Check if the provided OTP matches the OTP stored in the database
-    const [caregiver] = await dbPool.execute('SELECT * FROM clients WHERE email = ? AND otp = ?', [email, otp]);
+    const [caregiver] = await dbPool.execute('SELECT * FROM caregivers WHERE email = ? AND otp = ?', [email, otp]);
 
     if (!caregiver.length) {
       return res.status(400).json({ message: 'Invalid OTP' });
     }
 
     // Clear the OTP from the database after successful login
-    await dbPool.execute('UPDATE clients SET otp = NULL WHERE email = ?', [email]);
+    await dbPool.execute('UPDATE caregivers SET otp = NULL WHERE email = ?', [email]);
 
     // Start a session for the client
     req.session.caregiverId = caregiver[0].id;

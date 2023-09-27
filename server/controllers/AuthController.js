@@ -12,6 +12,11 @@ const logger = require('winston');
 require('dotenv').config()
 const bcrypt = require('bcrypt');
 
+// Generate a random OTP
+function generateOTP() {
+  return Math.floor(1000 + Math.random() * 9000); // Generate a 4-digit OTP
+}
+
 // Create a MySQL connection pool
 const dbPool = mysql.createPool({
   host: process.env.DB_HOST,
@@ -118,7 +123,7 @@ exports.requestService = async (req, res) => {
       from: process.env.MAIL_USER,
       to: email,
       subject: 'Welcome to Equity Care Global',
-      html: 'Thank you for registering with our service! You can <a href="/login">login</a> to view your profile.',
+      html: 'Thank you for registering with our service! You can <a href="/client-login">login</a> to view your profile.',
     };
 
     await transporter.sendMail(mailOptions);
@@ -237,10 +242,155 @@ exports.becomeCaregiver = async (req, res) => {
     await transporter.sendMail(mailOptions);
     logger.info('Email sent');
     res.status(200).json({ message: 'Registration successful. Welcome email sent.' });
+
   } catch (error) {
     logger.error(error);
     res.status(500).send({ message: error.message || 'Error occurred' });
   }
 };
 
+// Controller for client login
+exports.clientLogin = async (req, res) => {
+  try {
+    const { email, password } = req.body;
 
+    // Retrieve the hashed password from the database for the email
+    const [client] = await dbPool.execute('SELECT * FROM clients WHERE email = ?', [email]);
+
+    if (!client.length) {
+      return res.status(400).json({ message: 'Invalid credentials' });
+    }
+
+    // Compare plaintext password with hashed password from the database
+    const hashedPassword = client[0].password;
+
+    const passwordMatch = await bcrypt.compare(password, hashedPassword);
+
+    if (!passwordMatch) {
+      return res.status(400).json({ message: 'Invalid credentials' });
+    }
+
+    const otp = generateOTP();
+
+    await dbPool.execute('UPDATE clients SET otp = ? WHERE email = ?', [otp, email]);
+
+    const mailOptions = {
+      from: process.env.MAIL_USER,
+      to: email,
+      subject: 'Login OTP',
+      text: `Your OTP for login is: ${otp}`,
+    };
+
+    transporter.sendMail(mailOptions, (error, info) => {
+      if (error) {
+        logger.error('Failed to send OTP email:', error);
+        return res.status(400).json({ message: 'Failed to send OTP' });
+      } else {
+        logger.info('OTP email sent:', info.response);
+        return res.status(200).json({ message: 'OTP sent to your email' });
+      }
+    });
+  } catch (error) {
+    logger.error('Client login error:', error);
+    return res.status(500).json({ message: 'Error occurred' });
+  }
+};
+
+
+// Controller for verifying OTP and completing the login
+exports.verifyClientOTP = async (req, res) => {
+  try {
+    const { email, otp } = req.body;
+
+    // Check if the provided OTP matches the OTP stored in the database
+    const [client] = await dbPool.execute('SELECT * FROM clients WHERE email = ? AND otp = ?', [email, otp]);
+
+    if (!client.length) {
+      return res.status(400).json({ message: 'Invalid OTP' });
+    }
+
+    // Clear the OTP from the database after successful login
+    await dbPool.execute('UPDATE clients SET otp = NULL WHERE email = ?', [email]);
+
+    // Start a session for the client
+    req.session.clientId = client[0].id;
+
+    return res.status(200).json({ message: 'Login successful' });
+  } catch (error) {
+    logger.error('OTP verification error:', error);
+    return res.status(500).json({ message: 'Error occurred' });
+  }
+};
+
+// Controller for caregiver login
+exports.caregiverLogin = async (req, res) => {
+  try {
+    const { email, password } = req.body;
+
+    // Retrieve the hashed password from the database for the email
+    const [caregiver] = await dbPool.execute('SELECT * FROM caregivers WHERE email = ?', [email]);
+
+    if (!caregiver.length) {
+      return res.status(400).json({ message: 'Invalid credentials' });
+    }
+
+    // Compare plaintext password with hashed password from the database
+    const hashedPassword = caregiver[0].password;
+
+    const passwordMatch = await bcrypt.compare(password, hashedPassword);
+
+    if (!passwordMatch) {
+      return res.status(400).json({ message: 'Invalid credentials' });
+    }
+    
+    const otp = generateOTP();
+
+    await dbPool.execute('UPDATE clients SET otp = ? WHERE email = ?', [otp, email]);
+
+    const mailOptions = {
+      from: process.env.MAIL_USER,
+      to: email,
+      subject: 'Login OTP',
+      text: `Your OTP for login is: ${otp}`,
+    };
+
+    transporter.sendMail(mailOptions, (error, info) => {
+      if (error) {
+        logger.error('Failed to send OTP email:', error);
+        return res.status(400).json({ message: 'Failed to send OTP' });
+      } else {
+        logger.info('OTP email sent:', info.response);
+        return res.status(200).json({ message: 'OTP sent to your email' });
+      }
+    });
+  } catch (error) {
+    logger.error('Client login error:', error);
+    return res.status(500).json({ message: 'Error occurred' });
+  }
+};
+
+
+// Controller for verifying caregiver OTP and completing the login
+exports.verifyCaregiverOTP = async (req, res) => {
+  try {
+    const { email, otp } = req.body;
+
+    // Check if the provided OTP matches the OTP stored in the database
+    const [caregiver] = await dbPool.execute('SELECT * FROM clients WHERE email = ? AND otp = ?', [email, otp]);
+
+    if (!caregiver.length) {
+      return res.status(400).json({ message: 'Invalid OTP' });
+    }
+
+    // Clear the OTP from the database after successful login
+    await dbPool.execute('UPDATE clients SET otp = NULL WHERE email = ?', [email]);
+
+    // Start a session for the client
+    req.session.caregiverId = caregiver[0].id;
+
+    return res.status(200).json({ message: 'Login successful' });
+  } catch (error) {
+    logger.error('OTP verification error:', error);
+    return res.status(500).json({ message: 'Error occurred' });
+  }
+};

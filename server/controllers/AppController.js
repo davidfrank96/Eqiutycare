@@ -1,47 +1,50 @@
-exports.homepage = async(req, res) =>{
-    try {
-        res.render('index', {title: 'Equitycare Global | Home'});
-    } catch (error) {
-        res.status(500).send({message: error.message || "Error occured"});
-    }
-}
+const logger = require('winston');
+const dbPool = require('../models/db');
 
-exports.aboutpage = async(req, res) =>{
-    try {
-        res.render('about', {title: 'Equitycare Global | About'});
-    } catch (error) {
-        res.status(500).send({message: error.message || "Error occured"});
+// retrieve client details
+exports.getClientProfile = async (req, res) => {
+  try {
+    // Check if the client is logged in
+    if (!req.session.clientId) {
+      return res.status(401).json({ message: 'Unauthorized' });
     }
-}
 
-exports.servicespage = async(req, res) =>{
-    try {
-        res.render('services', {title: 'Equitycare Global | Services'});
-    } catch (error) {
-        res.status(500).send({message: error.message || "Error occured"});
-    }
-}
+    const clientId = req.session.clientId; // Retrieve the client's ID from the session
 
-exports.faqpage = async(req, res) =>{
-    try {
-        res.render('faq', {title: 'Equitycare Global | FAQ'});
-    } catch (error) {
-        res.status(500).send({message: error.message || "Error occured"});
-    }
-}
+    const [client] = await dbPool.execute('SELECT * FROM clients WHERE id = ?', [clientId]);
 
-exports.contactpage = async(req, res) =>{
-    try {
-        res.render('contact', {title: 'Equitycare Global | Contact'});
-    } catch (error) {
-        res.status(500).send({message: error.message || "Error occured"});
+    if (!client.length) {
+      return res.status(400).json({ message: 'Client not found' });
     }
-}
 
-exports.ratepage = async(req, res) =>{
+    // Return the client details as JSON
+    return res.status(200).json({ client: client[0] });
+  } catch (error) {
+    logger.error('Error retrieving client profile:', error);
+    return res.status(500).json({ message: 'Error occurred' });
+  }
+};
+
+// retrieve client details
+exports.getCaregiverProfile = async (req, res) => {
     try {
-        res.render('our-rates', {title: 'Equitycare Global | Our Rates'});
+      // Check if the client is logged in
+      if (!req.session.caregiverId) {
+        return res.status(401).json({ message: 'Unauthorized' });
+      }
+  
+      const caregiverId = req.session.caregiverId; // Retrieve the client's ID from the session
+  
+      const [caregiver] = await dbPool.execute('SELECT * FROM caregivers WHERE id = ?', [caregiverId]);
+  
+      if (!caregiver.length) {
+        return res.status(400).json({ message: 'Client not found' });
+      }
+  
+      // Return the client details as JSON
+      return res.status(200).json({ caregiver: caregiver[0] });
     } catch (error) {
-        res.status(500).send({message: error.message || "Error occured"});
+      logger.error('Error retrieving client profile:', error);
+      return res.status(500).json({ message: 'Error occurred' });
     }
-}
+  };

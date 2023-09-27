@@ -3,7 +3,7 @@ const router = express.Router()
 const AuthController = require('../controllers/AuthController')
 
 /**
- * App routes
+ * Auth routes
  */
 router.post('/request-service', AuthController.requestService)
 router.post('/become-caregiver', AuthController.becomeCaregiver)

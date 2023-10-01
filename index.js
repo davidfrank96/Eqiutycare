@@ -1,13 +1,15 @@
 const express = require("express")
 const expressLayouts = require("express-ejs-layouts")
 const session = require("express-session")
-
+const cors = require('cors')
 const app = express()
 const port = process.env.PORT || 3003
 
 require('dotenv').config()
 
-app.use(express.urlencoded({extended: true}))
+// app.use(express.urlencoded({extended: true}))
+app.use(express.json());
+app.use(cors())
 app.use(session({
     secret: "secretKey",
     saveUninitialized: false,

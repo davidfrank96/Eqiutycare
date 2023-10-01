@@ -1,0 +1,386 @@
+<!--page-title-area start-->
+<section class="page-title-area" style="background-image: url(assets/img/bg/page-title-bg1.jpg);">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-xl-5">
+                <div class="page-title-wrapper">
+                    <div class="page-title-inner">
+                        <div class="page-title-inner-content theme-bg">
+                            <div class="page-title">
+                                <h1 class="main-page-title">Join Us</h1>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!--page-title-area end-->
+<!--contact-details-area start-->
+<section class="contact-details-area pt-100 pb-100">
+    <div class="container">
+        <div class="row">
+            <div class="col-xl-12 col-lg-12 col-md-12">
+                <div class="section-title text-center mb-15">
+                    <h2>Get Started With Us</h2>                    
+                    <div class="button-container">
+                        <button id="toggleCaregiverForm" class="theme_btn">Become a Caregiver</button>
+                        <button id="toggleServiceRequestForm" class="theme_btn">Request for Service</button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-12 col-lg-12 col-md-12">
+                <div class="" id="caregiverForm">
+                    <form class="caregiver-form" action="" method="POST" enctype="multipart/form-data">
+                        <h2>Register as a Caregiver</h2>
+                        <b>Your Personal Details</b>
+                        <div class="row no-gutters">
+                            <div class="col-xl-12">
+                                <div class="input-area input-name">
+                                    <input type="text" class="form-control" name="first_name" placeholder="Your First Name">
+                                </div>
+                            </div> <br><br>
+                            <div class="col-xl-12">
+                                <div class="input-area">
+                                    <input type="text" class="form-control" name="last_name" placeholder="Your Last Name">
+                                </div>
+                            </div> <br><br>
+                            <div class="col-xl-12">
+                                <div class="input-area input-email">
+                                    <input type="email" class="form-control" name="email" placeholder="Your Email">
+                                </div>
+                            </div> <br><br>
+                            <div class="col-xl-12">
+                                <div class="input-area input-phone">
+                                    <input type="number" class="form-control" name="phone" placeholder="Your Phone" required>
+                                </div>
+                            </div> <br><br>
+                            <div class="col-xl-12">
+                                Your Gender
+                                <div class="input-area input-gender">
+                                    <input type="radio" name="gender" value="male" required>
+                                    Male
+                                    <input type="radio" name="gender" value="female" required>
+                                   Female
+                                </div>
+                            </div>
+                            
+                            <div class="col-xl-12">
+                                <div class="input-area input-password">
+                                    <input type="password" class="form-control" name="password" placeholder="Password" required>
+                                </div>
+                            </div>
+                            <div class="col-xl-12">
+                                <div class="input-area input-dob">
+                                    Date of birth:<input type="date" class="form-control" name="date_of_birth" placeholder="Date of Birth" required>
+                                </div>
+                            </div> <br><br><br>
+                            <div class="col-xl-12">
+                                <div class="input-area input-address">
+                                    <input type="text" class="form-control" name="address" placeholder="Your Address" required>
+                                </div>
+                            </div> <br><br>
+                            <div class="col-xl-12">
+                                Type of Identification
+                                <div class="input-area input-identification">
+                                    <select class="form-control" name="type_of_identification" id="type_of_identification" required>
+                                        <option value="DRIVERS_LICENSE">Driver's License</option>
+                                        <option value="INTERNATIONAL_PASSPORT">International Passport</option>
+                                        <option value="NATIONAL_ID">National ID</option>
+                                    </select>
+                                </div>
+                            </div><br><br>
+                            <div class="col-xl-12">
+                                Upload Identification File
+                                <div class="input-area input-file">
+                                    <input type="file" class="form-control" name="identification_file" id="identification_file" required>
+                                </div>
+                            </div> <br><br><br>
+                            <div class="col-xl-12">
+                                <div class="input-area input-skill">
+                                    <input type="text" class="form-control" name="skill" placeholder="Your Skills (specify what skills you have e.g nurse, auxilary nurse, caregiver etc )" required>
+                                </div>
+                            </div> <br><br>
+                            <div class="col-xl-12">
+                                <div class="input-area input-experience">
+                                    <input type="text" class="form-control" name="years_of_experience" placeholder="Years of Experience" required>
+                                </div>
+                            </div> <br><br>
+                            <div class="col-xl-12">
+                                <div class="input-area input-services">
+                                    <input type="text" class="form-control" name="services_provided" placeholder="What service(s) can you provide? e.g Housekeeping, meal preparation, bathing, grooming, assisted daily living etc" required>
+                                </div>
+                            </div> <br><br>
+                            <div class="col-xl-12">
+                                <div class="input-area input-scheduling">
+                                    <input type="text" class="form-control" name="scheduling" placeholder="What schedule fits you best? e.g weekdays, weekends, morning shift (7AM-5PM), evening shift(5PM-7AM) " required>
+                                </div>
+                            </div> <br><br>
+                            <div class="col-xl-12">
+                                <div class="input-area input-living">
+                                    <input type="text" class="form-control" name="living_arrangement" placeholder="What is your prefered living arrangement? e.g Live with client, visit client" required>
+                                </div>
+                            </div> <br><br>
+                            <b>Your Referee Information</b>
+                            <div class="col-xl-12">
+                                <div class="input-area input-referee-name">
+                                    <input type="text" class="form-control" name="referee_name" placeholder="Referee Name" required>
+                                </div>
+                            </div> <br><br>
+                            <div class="col-xl-12">
+                                <div class="input-area input-referee-email">
+                                    <input type="email" class="form-control" name="referee_email" placeholder="Referee Email" required>
+                                </div>
+                            </div> <br><br>
+                            <div class="col-xl-12">
+                                <div class="input-area input-referee-phone">
+                                    <input type="number" class="form-control" name="referee_phone" placeholder="Referee Phone" required>
+                                </div>
+                            </div> <br><br>
+                            <div class="col-xl-12">
+                                <div class="input-area input-referee-occupation">
+                                    <input type="text" class="form-control" name="referee_occupation" placeholder="Referee Occupation" required>
+                                </div>
+                            </div> <br><br>
+                            <div class="col-xl-12">
+                                <div class="input-area input-relationship">
+                                    <input type="text" class="form-control" name="relationship_with_referee" placeholder="Relationship with Referee" required>
+                                </div>
+                            </div> <br><br>
+                        </div>
+                        <div class="col-12">
+                            <div class="submit-btn submit-lg-btn2">
+                                <button class="theme_btn" type="submit">Register <i class="fal fa-long-arrow-right"></i></button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                
+
+                <div class="" id="serviceRequestForm">
+                    <form class="request-service-form" action="" method="POST" enctype="multipart/form-data">
+                        <h2>Request for a service</h2>
+                        <b>Your Personal Details</b>
+                        <div class="row no-gutters">
+                            <div class="col-xl-12">
+                                <div class="input-area input-name">
+                                    <input type="text" class="form-control" name="first_name" placeholder="Your First Name">
+                                </div>
+                            </div> <br><br>
+                            <div class="col-xl-12">
+                                <div class="input-area">
+                                    <input type="text" class="form-control" name="last_name" placeholder="Your Last Name">
+                                </div>
+                            </div> <br><br>
+                            <div class="col-xl-12">
+                                <div class="input-area input-email">
+                                    <input type="email" class="form-control" name="email" placeholder="Your Email">
+                                </div>
+                            </div> <br><br>
+                            <div class="col-xl-12">
+                                <div class="input-area input-phone">
+                                    <input type="number" class="form-control" name="phone" placeholder="Your Phone" required>
+                                </div>
+                            </div> <br><br>
+                            <div class="col-xl-12">
+                                Your Gender
+                                <div class="input-area input-gender">
+                                    <input type="radio" name="gender" value="male" required>
+                                    Male
+                                    <input type="radio" name="gender" value="female" required>
+                                   Female
+                                </div>
+                            </div>
+                            
+                            <div class="col-xl-12">
+                                <div class="input-area input-password">
+                                    <input type="password" class="form-control" name="password" placeholder="Password" required>
+                                </div>
+                            </div> <br><br>
+                            <b>DETAILS OF PROPOSED RECIPIENT WHO NEEDS CARE</b>
+                            <div class="col-xl-12">
+                                <div class="input-area input-referee-name">
+                                    <input type="text" class="form-control" name="recipient_name" placeholder="Recipient Name" required>
+                                </div>
+                            </div> <br><br>
+                            <div class="col-xl-12">
+                                <div class="input-area input-referee-email">
+                                    <input type="email" class="form-control" name="recipient_email" placeholder="Recipient Email" required>
+                                </div>
+                            </div> <br><br>
+                            <div class="col-xl-12">
+                                Recipient Gender
+                                <div class="input-area input-gender">
+                                    <input type="radio" name="recipient_gender" value="male" required>
+                                    Male
+                                    <input type="radio" name="recipient_gender" value="female" required>
+                                   Female
+                                </div>
+                            </div>                           
+                            <div class="col-xl-12">
+                                <div class="input-area input-services">
+                                    <input type="text" class="form-control" name="type_of_service" placeholder="What type of service(s) is required? e.g Housekeeping, meal preparation, bathing, grooming, assisted daily living etc" required>
+                                </div>
+                            </div> <br><br>
+                            <div class="col-xl-12">
+                                <div class="input-area input-dob">
+                                    Recipient Date of birth:<input type="date" class="form-control" name="recipient_dob" required>
+                                </div>
+                            </div> <br><br><br>
+                            <div class="col-xl-12">
+                                <div class="input-area input-referee-phone">
+                                    <input type="number" class="form-control" name="recipient_address" placeholder="Recipient Address" required>
+                                </div>
+                            </div> <br><br>
+                            
+                            <div class="col-xl-12">
+                                <div class="input-area input-services">
+                                    <input type="text" class="form-control" name="health_condition" placeholder="What is the present health condition of the recipient?" required>
+                                </div>
+                            </div> <br><br>
+                            <div class="col-xl-12">
+                                <div class="input-area input-services">
+                                    <input type="text" class="form-control" name="prefered_service_schedule" placeholder="What is your prefered schedule e.g (weekly, weekends, morning shift (7AM-5PM), evening shift(5PM-7AM))?" required>
+                                </div>
+                            </div> <br><br>
+                            <div class="col-xl-12">
+                                <div class="input-area input-dob">
+                                    Preferred Start Date:<input type="date" class="form-control" name="preferred_start_date" required>
+                                </div>
+                            </div> <br><br><br>
+                        </div>
+                        <div class="col-12">
+                            <div class="submit-btn submit-lg-btn2">
+                                <button class="theme_btn" type="submit">Register <i class="fal fa-long-arrow-right"></i></button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!--contact-details-area end-->
+
+<script>
+    const form = document.querySelector('.caregiver-form');
+    form.addEventListener('submit', function (e) {
+        e.preventDefault(); 
+
+        const xhr = new XMLHttpRequest();
+        xhr.open('POST', '/auth/become-caregiver', true);
+
+        xhr.onload = function() {
+            if (xhr.status === 400) {
+                const response = JSON.parse(xhr.responseText);
+                alert(response.message);
+            } else if (xhr.status === 200) {                
+                const response = JSON.parse(xhr.responseText);
+                alert(response.message);
+            }
+        };
+
+        const payload = {
+            first_name: form.elements['first_name'].value.trim(),
+            last_name: form.elements['last_name'].value.trim(),
+            email: form.elements['email'].value.trim(),
+            phone: form.elements['phone'].value.trim(),
+            gender: form.elements['gender'].value,
+            password: form.elements['password'].value,
+            date_of_birth: form.elements['date_of_birth'].value,
+            address: form.elements['address'].value.trim(),
+            type_of_identification: form.elements['type_of_identification'].value,
+            identification_file: form.elements['identification_file'].value,
+            skill: form.elements['skill'].value.trim(),
+            years_of_experience: form.elements['years_of_experience'].value.trim(),
+            services_provided: form.elements['services_provided'].value.trim(),
+            scheduling: form.elements['scheduling'].value.trim(),
+            living_arrangement: form.elements['living_arrangement'].value.trim(),
+            referee_name: form.elements['referee_name'].value.trim(),
+            referee_email: form.elements['referee_email'].value.trim(),
+            referee_phone: form.elements['referee_phone'].value.trim(),
+            referee_occupation: form.elements['referee_occupation'].value.trim(),
+            relationship_with_referee: form.elements['relationship_with_referee'].value.trim()
+        };
+
+        console.log(JSON.stringify(payload))
+        xhr.send(JSON.stringify(payload));
+    });
+</script>
+
+<script>
+    const form2 = document.querySelector('.request-service-form');
+    form2.addEventListener('submit', function (e) {
+        e.preventDefault();
+
+        const xhr = new XMLHttpRequest();
+        xhr.open('POST', '/auth/request-service', true);
+
+        xhr.onload = function () {
+            if (xhr.status === 400) {
+                const response = JSON.parse(xhr.responseText);
+                alert(response.message);
+            } else if (xhr.status === 200) {
+                const response = JSON.parse(xhr.responseText);
+                alert(response.message);
+            }
+        };
+
+        const payload = {
+            first_name: form2.elements['first_name'].value.trim(),
+            last_name: form2.elements['last_name'].value.trim(),
+            email: form2.elements['email'].value.trim(),
+            phone: form2.elements['phone'].value.trim(),
+            gender: form2.elements['gender'].value,
+            password: form2.elements['password'].value,
+            recipient_name: form2.elements['recipient_name'].value.trim(),
+            recipient_email: form2.elements['recipient_email'].value.trim(),
+            recipient_gender: form2.elements['recipient_gender'].value,
+            type_of_service: form2.elements['type_of_service'].value.trim(),
+            recipient_dob: form2.elements['recipient_dob'].value,
+            recipient_address: form2.elements['recipient_address'].value.trim(),
+            health_condition: form2.elements['health_condition'].value.trim(),
+            prefered_service_schedule: form2.elements['prefered_service_schedule'].value.trim(),
+            preferred_start_date: form2.elements['preferred_start_date'].value
+        };
+
+        console.log(JSON.stringify(payload))
+        xhr.send(JSON.stringify(payload));
+    });
+</script>
+
+
+<script>
+    const caregiverForm = document.getElementById('caregiverForm');
+    const serviceRequestForm = document.getElementById('serviceRequestForm');
+
+    const toggleCaregiverButton = document.getElementById('toggleCaregiverForm');
+    const toggleServiceRequestButton = document.getElementById('toggleServiceRequestForm');
+
+    // Initially, show "Become a Caregiver" form and hide "Request for Service" form
+    caregiverForm.style.display = 'block';
+    serviceRequestForm.style.display = 'none';
+
+    toggleCaregiverButton.addEventListener('click', () => {
+        caregiverForm.style.display = 'block';
+        serviceRequestForm.style.display = 'none';
+    });
+
+    toggleServiceRequestButton.addEventListener('click', () => {
+        serviceRequestForm.style.display = 'block';
+        caregiverForm.style.display = 'none';
+    });
+</script>
+
+<style>
+.button-container {
+    display: flex;
+    justify-content: center; 
+
+    @media screen and (max-width: 768px) {
+        justify-content: center;
+    }
+}
+</style>
+  

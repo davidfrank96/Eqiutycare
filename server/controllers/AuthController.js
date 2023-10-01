@@ -1,12 +1,25 @@
 const nodemailer = require('nodemailer');
 const fs = require('fs');
 const util = require('util');
-const path = require('path');
 const multer = require('multer');
-const relativePathToServer = '../';
-const destinationFolder = path.join(__dirname, relativePathToServer, 'uploads');
-const upload = multer({ dest: destinationFolder }); // Configure multer with the upload destination folder
-const readFile = util.promisify(fs.readFile);
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, 'uploads/');
+  },
+  filename: function (req, file, cb) {
+    cb(null, Date.now() + '-' + file.originalname);
+  },
+});
+const upload = multer({ 
+  storage: storage,
+  limits: {
+    fileSize: 1024 * 1024 * 5, // 5MB (adjust the size limit as needed)
+  },
+});
+// const relativePathToServer = '../';
+// const destinationFolder = path.join(__dirname, relativePathToServer, 'uploads');
+// const upload = multer({ dest: destinationFolder }); // Configure multer with the upload destination folder
+// const readFile = util.promisify(fs.readFile);
 const logger = require('winston');
 const bcrypt = require('bcrypt');
 const dbPool = require('../models/db');
@@ -19,7 +32,7 @@ function generateOTP() {
 const transporter = nodemailer.createTransport({
   service: process.env.MAIL_SERVICE, 
   auth: {
-    user: process.env,MAIL_USER,
+    user: process.env.MAIL_USER,
     pass: process.env.MAIL_PASS,
   },
 });
@@ -48,8 +61,6 @@ exports.requestService = async (req, res) => {
       recipient_gender,
       recipient_dob,
       recipient_address,
-      alertness,
-      allergy,
       preferred_start_date,
       prefered_service_schedule,
       service_arrangement,
@@ -78,8 +89,6 @@ exports.requestService = async (req, res) => {
         recipient_gender,
         recipient_dob,
         recipient_address,
-        alertness,
-        allergy,
         preferred_start_date,
         prefered_service_schedule,
         service_arrangement
@@ -100,8 +109,6 @@ exports.requestService = async (req, res) => {
         recipient_gender,
         recipient_dob,
         recipient_address,
-        alertness,
-        allergy,
         preferred_start_date,
         prefered_service_schedule,
         service_arrangement,
@@ -135,6 +142,7 @@ exports.requestService = async (req, res) => {
  */
 exports.becomeCaregiver = async (req, res) => {
   try {
+    console.log(req.body)
     const {
       first_name,
       last_name,
@@ -157,6 +165,8 @@ exports.becomeCaregiver = async (req, res) => {
       relationship_with_referee,
     } = req.body;
 
+    console.log(first_name);
+
     // Check if email already exists in the database
     const [existingUser] = await dbPool.execute('SELECT * FROM caregivers WHERE email = ?', [email]);
 
@@ -166,9 +176,9 @@ exports.becomeCaregiver = async (req, res) => {
 
     let identificationFilePath = null;
 
-    if (req.file) {
+    if (file) {
       // Get the uploaded file path
-      identificationFilePath = req.file.path;
+      identificationFilePath = file.path;
     }
 
     // Hash the password
@@ -226,13 +236,13 @@ exports.becomeCaregiver = async (req, res) => {
       from: process.env.MAIL_USER,
       to: email,
       subject: 'Welcome to Equity Care Gloabal',
-      html: 'Thank you for registering as a caregiver with our service! You can <a href="/login">login</a> to access your caregiver profile.',
+      html: 'Thank you for registering as a caregiver with our service! You can <a href="/caregiver-login">login</a> to access your caregiver profile.',
     };
 
     await transporter.sendMail(mailOptions);
     logger.info('Email sent');
+   
     res.status(200).json({ message: 'Registration successful. Welcome email sent.' });
-
   } catch (error) {
     logger.error(error);
     res.status(500).send({ message: error.message || 'Error occurred' });

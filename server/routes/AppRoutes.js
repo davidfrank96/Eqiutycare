@@ -6,5 +6,6 @@ const AppController = require('../controllers/AppController')
  * App routes
  */
 router.get('/client-profile', AppController.getClientProfile)
+router.get('/caregiver-profile', AppController.getCaregiverProfile)
 
 module.exports = router

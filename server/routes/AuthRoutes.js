@@ -10,6 +10,6 @@ router.post('/become-caregiver', AuthController.becomeCaregiver)
 router.post('/client-login', AuthController.clientLogin)
 router.post('/verify-client-otp', AuthController.verifyClientOTP)
 router.post('/caregiver-login', AuthController.caregiverLogin)
-router.post('/verify-client-otp', AuthController.verifyCaregiverOTP)
+router.post('/verify-caregiver-otp', AuthController.verifyCaregiverOTP)
 
 module.exports = router

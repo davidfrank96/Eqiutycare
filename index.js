@@ -7,8 +7,8 @@ const port = process.env.PORT || 3003
 
 require('dotenv').config()
 
-// app.use(express.urlencoded({extended: true}))
 app.use(express.json());
+app.use(express.urlencoded({extended: true}))
 app.use(cors())
 app.use(session({
     secret: "secretKey",

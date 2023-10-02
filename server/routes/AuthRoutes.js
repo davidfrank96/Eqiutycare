@@ -11,5 +11,7 @@ router.post('/client-login', AuthController.clientLogin)
 router.post('/verify-client-otp', AuthController.verifyClientOTP)
 router.post('/caregiver-login', AuthController.caregiverLogin)
 router.post('/verify-caregiver-otp', AuthController.verifyCaregiverOTP)
+router.post('/admin-login', AuthController.adminLogin)
+router.post('/verify-admin-otp', AuthController.adminLogin)
 
 module.exports = router

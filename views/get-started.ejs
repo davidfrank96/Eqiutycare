@@ -59,9 +59,9 @@
                             <div class="col-xl-12">
                                 Your Gender
                                 <div class="input-area input-gender">
-                                    <input type="radio" name="gender" value="male" required>
+                                    <input type="radio" name="gender" value="Male" required>
                                     Male
-                                    <input type="radio" name="gender" value="female" required>
+                                    <input type="radio" name="gender" value="Female" required>
                                    Female
                                 </div>
                             </div>
@@ -159,7 +159,7 @@
                 
 
                 <div class="" id="serviceRequestForm">
-                    <form class="request-service-form" action="" method="POST" enctype="multipart/form-data">
+                    <form class="request-service-form">
                         <h2>Request for a service</h2>
                         <b>Your Personal Details</b>
                         <div class="row no-gutters">
@@ -186,9 +186,9 @@
                             <div class="col-xl-12">
                                 Your Gender
                                 <div class="input-area input-gender">
-                                    <input type="radio" name="gender" value="male" required>
+                                    <input type="radio" name="gender" value="Male" required>
                                     Male
-                                    <input type="radio" name="gender" value="female" required>
+                                    <input type="radio" name="gender" value="Female" required>
                                    Female
                                 </div>
                             </div>
@@ -212,15 +212,16 @@
                             <div class="col-xl-12">
                                 Recipient Gender
                                 <div class="input-area input-gender">
-                                    <input type="radio" name="recipient_gender" value="male" required>
+                                    <input type="radio" name="recipient_gender" value="Male" required>
                                     Male
-                                    <input type="radio" name="recipient_gender" value="female" required>
+                                    <input type="radio" name="recipient_gender" value="Female" required>
                                    Female
                                 </div>
                             </div>                           
                             <div class="col-xl-12">
                                 <div class="input-area input-services">
-                                    <input type="text" class="form-control" name="type_of_service" placeholder="What type of service(s) is required? e.g Housekeeping, meal preparation, bathing, grooming, assisted daily living etc" required>
+                                    <input type="text" class="form-control" name="type_of_service" placeholder="What type of service(s) is required?" required>
+                                    <span><small>Services include Housekeeping, meal preparation, bathing, grooming, assisted daily living etc</small></span>
                                 </div>
                             </div> <br><br>
                             <div class="col-xl-12">
@@ -230,18 +231,20 @@
                             </div> <br><br><br>
                             <div class="col-xl-12">
                                 <div class="input-area input-referee-phone">
-                                    <input type="number" class="form-control" name="recipient_address" placeholder="Recipient Address" required>
+                                    <input type="text" class="form-control" name="recipient_address" placeholder="Recipient Address" required>
                                 </div>
                             </div> <br><br>
                             
                             <div class="col-xl-12">
                                 <div class="input-area input-services">
                                     <input type="text" class="form-control" name="health_condition" placeholder="What is the present health condition of the recipient?" required>
+                                    <span><small> e.g Alzeihmer, Dementia, Diabetes etc</small></span>
                                 </div>
                             </div> <br><br>
                             <div class="col-xl-12">
                                 <div class="input-area input-services">
-                                    <input type="text" class="form-control" name="prefered_service_schedule" placeholder="What is your prefered schedule e.g (weekly, weekends, morning shift (7AM-5PM), evening shift(5PM-7AM))?" required>
+                                    <input type="text" class="form-control" name="prefered_service_schedule" placeholder="What is your prefered schedule?" required>
+                                    <span><small> e.g (weekly, weekends, morning shift (7AM-5PM), evening shift(5PM-7AM))</small></span>
                                 </div>
                             </div> <br><br>
                             <div class="col-xl-12">
@@ -314,20 +317,21 @@
     form2.addEventListener('submit', function (e) {
         e.preventDefault();
 
-        const xhr = new XMLHttpRequest();
-        xhr.open('POST', '/auth/request-service', true);
+        const xhr2 = new XMLHttpRequest();
+        xhr2.open('POST', '/auth/request-service', true);
+        xhr.setRequestHeader('Content-Type', 'application/json');
 
-        xhr.onload = function () {
-            if (xhr.status === 400) {
-                const response = JSON.parse(xhr.responseText);
+        xhr2.onload = function () {
+            if (xhr2.status === 400) {
+                const response = JSON.parse(xhr2.responseText);
                 alert(response.message);
-            } else if (xhr.status === 200) {
-                const response = JSON.parse(xhr.responseText);
+            } else if (xhr2.status === 200) {
+                const response = JSON.parse(xhr2.responseText);
                 alert(response.message);
             }
         };
 
-        const payload = {
+        const payload2 = {
             first_name: form2.elements['first_name'].value.trim(),
             last_name: form2.elements['last_name'].value.trim(),
             email: form2.elements['email'].value.trim(),
@@ -345,8 +349,8 @@
             preferred_start_date: form2.elements['preferred_start_date'].value
         };
 
-        console.log(JSON.stringify(payload))
-        xhr.send(JSON.stringify(payload));
+        console.log(JSON.stringify(payload2))
+        xhr2.send(JSON.stringify(payload2));
     });
 </script>
 

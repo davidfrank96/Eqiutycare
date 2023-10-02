@@ -20,7 +20,6 @@ const upload = multer({
 // const destinationFolder = path.join(__dirname, relativePathToServer, 'uploads');
 // const upload = multer({ dest: destinationFolder }); // Configure multer with the upload destination folder
 // const readFile = util.promisify(fs.readFile);
-const logger = require('winston');
 const bcrypt = require('bcrypt');
 const dbPool = require('../models/db');
 // Generate a random OTP
@@ -62,9 +61,10 @@ exports.requestService = async (req, res) => {
       recipient_dob,
       recipient_address,
       preferred_start_date,
-      prefered_service_schedule,
-      service_arrangement,
+      prefered_service_schedule
     } = req.body;
+
+    console.log(req.body);
 
     // Check if email already exists in the database
     const [existingUser] = await dbPool.execute('SELECT email FROM clients WHERE email = ?', [email]);
@@ -90,9 +90,8 @@ exports.requestService = async (req, res) => {
         recipient_dob,
         recipient_address,
         preferred_start_date,
-        prefered_service_schedule,
-        service_arrangement
-      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`
+        prefered_service_schedule
+      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`;
     // Save registration data to the database
     const [results] = await dbPool.execute(query,
       [
@@ -110,8 +109,7 @@ exports.requestService = async (req, res) => {
         recipient_dob,
         recipient_address,
         preferred_start_date,
-        prefered_service_schedule,
-        service_arrangement,
+        prefered_service_schedule
       ]
     );
 
@@ -124,10 +122,8 @@ exports.requestService = async (req, res) => {
     };
 
     await transporter.sendMail(mailOptions);
-    logger.info('Email sent');
     res.status(200).json({ message: 'Registration successful. Welcome email sent.' });
   } catch (error) {
-    logger.error(error);
     res.status(500).send({ message: error.message || 'Error occurred' });
   }
 };
@@ -240,11 +236,9 @@ exports.becomeCaregiver = async (req, res) => {
     };
 
     await transporter.sendMail(mailOptions);
-    logger.info('Email sent');
    
     res.status(200).json({ message: 'Registration successful. Welcome email sent.' });
   } catch (error) {
-    logger.error(error);
     res.status(500).send({ message: error.message || 'Error occurred' });
   }
 };
@@ -283,16 +277,13 @@ exports.clientLogin = async (req, res) => {
 
     transporter.sendMail(mailOptions, (error, info) => {
       if (error) {
-        logger.error('Failed to send OTP email:', error);
         return res.status(400).json({ message: 'Failed to send OTP' });
       } else {
-        logger.info('OTP email sent:', info.response);
         return res.status(200).json({ message: 'OTP sent to your email' });
       }
     });
   } catch (error) {
-    logger.error('Client login error:', error);
-    return res.status(500).json({ message: 'Error occurred' });
+    return res.status(500).json({message: error.message || 'Error occurred' });
   }
 };
 
@@ -317,8 +308,7 @@ exports.verifyClientOTP = async (req, res) => {
 
     return res.status(200).json({ message: 'Login successful' });
   } catch (error) {
-    logger.error('OTP verification error:', error);
-    return res.status(500).json({ message: 'Error occurred' });
+    return res.status(500).json({ message: error.message || 'Error occurred' });
   }
 };
 
@@ -356,16 +346,13 @@ exports.caregiverLogin = async (req, res) => {
 
     transporter.sendMail(mailOptions, (error, info) => {
       if (error) {
-        logger.error('Failed to send OTP email:', error);
         return res.status(400).json({ message: 'Failed to send OTP' });
       } else {
-        logger.info('OTP email sent:', info.response);
         return res.status(200).json({ message: 'OTP sent to your email' });
       }
     });
   } catch (error) {
-    logger.error('Client login error:', error);
-    return res.status(500).json({ message: 'Error occurred' });
+    return res.status(500).json({ message: error.message || 'Error occurred' });
   }
 };
 
@@ -390,7 +377,69 @@ exports.verifyCaregiverOTP = async (req, res) => {
 
     return res.status(200).json({ message: 'Login successful' });
   } catch (error) {
-    logger.error('OTP verification error:', error);
-    return res.status(500).json({ message: 'Error occurred' });
+    return res.status(500).json({ message: error.message || 'Error occurred' });
+  }
+};
+
+
+exports.adminLogin = async (req, res) => {
+  try {
+    const { email, password } = req.body;
+
+    // Retrieve the hashed password from the database for the email
+    const [caregiver] = await dbPool.execute('SELECT * FROM admin WHERE email = ?', [email]);
+
+    if (!caregiver.length) {
+      return res.status(400).json({ message: 'Invalid credentials' });
+    }
+
+    if (password != caregiver[0].password) {
+      return res.status(400).json({ message: 'Invalid credentials' });
+    }
+    
+    const otp = generateOTP();
+
+    await dbPool.execute('UPDATE admin SET otp = ? WHERE email = ?', [otp, email]);
+
+    const mailOptions = {
+      from: process.env.MAIL_USER,
+      to: email,
+      subject: 'Login OTP',
+      text: `Your OTP for login is: ${otp}`,
+    };
+
+    transporter.sendMail(mailOptions, (error, info) => {
+      if (error) {
+        return res.status(400).json({ message: 'Failed to send OTP' });
+      } else {
+        return res.status(200).json({ message: 'OTP sent to your email' });
+      }
+    });
+    return res.status(200).json({ message: 'OTP sent to your email' });
+  } catch (error) {
+    return res.status(500).json({ message: error.message || 'Error occurred' });
+  }
+};
+
+exports.verifyAdminOTP = async (req, res) => {
+  try {
+    const { email, otp } = req.body;
+
+    // Check if the provided OTP matches the OTP stored in the database
+    const [admin] = await dbPool.execute('SELECT * FROM admin WHERE email = ? AND otp = ?', [email, otp]);
+
+    if (!admin.length) {
+      return res.status(400).json({ message: 'Invalid OTP' });
+    }
+
+    // Clear the OTP from the database after successful login
+    await dbPool.execute('UPDATE admin SET otp = NULL WHERE email = ?', [email]);
+
+    // Start a session for the client
+    req.session.adminId = admin[0].id;
+
+    return res.status(200).json({ message: 'Login successful' });
+  } catch (error) {
+    return res.status(500).json({ message: error.message || 'Error occurred' });
   }
 };

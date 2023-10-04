@@ -1,50 +1,50 @@
-const logger = require('winston');
 const dbPool = require('../models/db');
+const isAuthenticated = (req, res, next) => {
+  if (req.session.clientId) {
+    next();
+  } else {
+    res.redirect('/client-login'); 
+  }
+};
 
-// retrieve client details
-exports.getClientProfile = async (req, res) => {
-  try {
-    // Check if the client is logged in
-    if (!req.session.clientId) {
-      return res.status(401).json({ message: 'Unauthorized' });
-    }
-
-    const clientId = req.session.clientId; // Retrieve the client's ID from the session
-
-    const [client] = await dbPool.execute('SELECT * FROM clients WHERE id = ?', [clientId]);
-
-    if (!client.length) {
-      return res.status(400).json({ message: 'Client not found' });
-    }
-
-    // Return the client details as JSON
-    return res.status(200).json({ client: client[0] });
-  } catch (error) {
-    logger.error('Error retrieving client profile:', error);
-    return res.status(500).json({ message: 'Error occurred' });
+const isCaregiverAuthenticated = (req, res, next) => {
+  if (req.session.caregiverId) {
+    next();
+  } else {
+    res.redirect('/caregiver-login'); 
   }
 };
 
 // retrieve client details
-exports.getCaregiverProfile = async (req, res) => {
+exports.getClientProfile = [isAuthenticated, async (req, res) => {
+  try {
+    const clientId = req.session.clientId;
+
+    const [client] = await dbPool.execute('SELECT * FROM clients WHERE id = ?', [clientId]);
+
+    if (!client.length) {
+      return res.render('client-profile', { message: 'Client not found' });
+    }
+
+    return res.render('client-profile', { client: client[0] });
+  } catch (error) {
+    return res.status(500).json({ message: 'Error occurred' });
+  }
+}];
+
+// retrieve client details
+exports.getCaregiverProfile = [isCaregiverAuthenticated, async (req, res) => {
     try {
-      // Check if the client is logged in
-      if (!req.session.caregiverId) {
-        return res.status(401).json({ message: 'Unauthorized' });
-      }
-  
       const caregiverId = req.session.caregiverId; // Retrieve the client's ID from the session
   
       const [caregiver] = await dbPool.execute('SELECT * FROM caregivers WHERE id = ?', [caregiverId]);
   
       if (!caregiver.length) {
-        return res.status(400).json({ message: 'Client not found' });
+        return res.render('caregiver-profile', { message: 'caregiver not found' });
       }
   
-      // Return the client details as JSON
-      return res.status(200).json({ caregiver: caregiver[0] });
+      return res.render('caregiver-profile', { caregiver: caregiver[0] });
     } catch (error) {
-      logger.error('Error retrieving client profile:', error);
       return res.status(500).json({ message: 'Error occurred' });
     }
-  };
+}];

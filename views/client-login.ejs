@@ -28,7 +28,17 @@
 
             <div class="col-xl-12 col-lg-12 col-md-12">
                 <div class="" id="clientlogin">
-                    <form class="" action="" method="POST">
+                    <% if (locals.message) { %> 
+                        <div class="text-success">
+                            <%= locals.message %> 
+                        </div>
+                    <% } %>
+                    <% if (locals.error) { %>
+                        <div class="text-danger">
+                            <%= locals.error %>
+                        </div>
+                    <% } %>
+                    <form class="" action="/auth/client-login" method="POST">
                         <div class="row no-gutters">
                             <div class="col-xl-12">
                                 <div class="input-area input-email">
@@ -52,31 +62,3 @@
         </div>
     </div>
 </section>
-
-<script>
-    const form = document.querySelector('#clientlogin form');
-    form.addEventListener('submit', function (e) {
-        e.preventDefault();
-
-        const xhr = new XMLHttpRequest();
-        xhr.open('POST', '/auth/client-login', true);
-
-        xhr.onload = function () {
-            if (xhr.status === 400) {
-                const response = JSON.parse(xhr.responseText);
-                alert(response.message);
-            } else if (xhr.status === 200) {
-                const response = JSON.parse(xhr.responseText);
-                alert(response.message);
-            }
-        };
-
-        const payload = {
-            email: form.elements['email'].value.trim(),
-            password: form.elements['password'].value,
-        };
-
-        console.log(JSON.stringify(payload))
-        xhr.send(JSON.stringify(payload));
-    });
-</script>

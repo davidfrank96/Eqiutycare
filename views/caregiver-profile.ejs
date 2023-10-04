@@ -1,0 +1,55 @@
+<section class="help-area-02 border-style pb-100">
+    <div class="container">
+        <div class="row">
+            <div class="col-xl-6 offset-xl-3">
+                <div class="section-title text-center mb-70">
+                    <h6 class="mb-20"><i class="far fa-plus"></i> Your Profile <i class="far fa-plus"></i>
+                    </h6>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xl-6 col-lg-6 col-md-6">
+                <div class="helps help-02 text-center mb-30">
+                    <div class="helps__img">
+                        <div class="help-btn-box">
+                        </div>
+                    </div>
+                    <div class="helps__content">                        
+                        <h2>Your Profile</h2>
+                        <p>Name: <%= caregiver.first_name %> <%= caregiver.last_name %></p>
+                        <p>Email: <%= caregiver.email %></p>
+                        <p>Phone: <%= caregiver.phone %></p>
+                        <p>Gender: <%= caregiver.gender %></p>
+                        <p>Services provided: <%= caregiver.services_provided %></p>
+                        <p>Years of Experience: <%= caregiver.years_of_experience %></p>
+                        <p>Skills: <%= caregiver.skill %></p>
+                        <p>Health Condition: <%= caregiver.years_of_experience %></p>
+                    </div>
+                </div>
+            </div>
+
+            
+            <div class="col-xl-6 col-lg-6 col-md-6">
+                <div class="helps help-02 text-center mb-30">
+                    <div class="helps__img">
+                        <div class="help-btn-box">
+                        </div>
+                    </div>
+                    <div class="helps__content">                      
+                        <h2>Referee Details</h2>
+                        <p>Name: <%= caregiver.referee_name %></p>
+                        <p>Email: <%= caregiver.referee_email %></p>
+                        <p>Phone: <%= caregiver.referee_phone %></p>
+                        <p>Occupation: <%= caregiver.referee_occupation %></p>
+                        <p>Relationship: <%= caregiver.relationship_with_referee %></p>
+                        <div class="border-line pos-rel"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+    </div>
+</section>

@@ -31,8 +31,13 @@
                 </div>
             </div>
             <div class="col-xl-12 col-lg-12 col-md-12">
+                <% if (error) { %>
+                    <div class="text-danger">
+                        <%= error %>
+                    </div>
+                <% } %>
                 <div class="" id="caregiverForm">
-                    <form class="caregiver-form" action="" method="POST" enctype="multipart/form-data">
+                    <form class="caregiver-form" action="/auth/become-caregiver" method="POST" enctype="multipart/form-data">
                         <h2>Register as a Caregiver</h2>
                         <b>Your Personal Details</b>
                         <div class="row no-gutters">
@@ -159,7 +164,7 @@
                 
 
                 <div class="" id="serviceRequestForm">
-                    <form class="request-service-form">
+                    <form class="request-service-form" method="POST" action="/auth/request-service">
                         <h2>Request for a service</h2>
                         <b>Your Personal Details</b>
                         <div class="row no-gutters">
@@ -265,95 +270,6 @@
     </div>
 </section>
 <!--contact-details-area end-->
-
-<script>
-    const form = document.querySelector('.caregiver-form');
-    form.addEventListener('submit', function (e) {
-        e.preventDefault(); 
-
-        const xhr = new XMLHttpRequest();
-        xhr.open('POST', '/auth/become-caregiver', true);
-
-        xhr.onload = function() {
-            if (xhr.status === 400) {
-                const response = JSON.parse(xhr.responseText);
-                alert(response.message);
-            } else if (xhr.status === 200) {                
-                const response = JSON.parse(xhr.responseText);
-                alert(response.message);
-            }
-        };
-
-        const payload = {
-            first_name: form.elements['first_name'].value.trim(),
-            last_name: form.elements['last_name'].value.trim(),
-            email: form.elements['email'].value.trim(),
-            phone: form.elements['phone'].value.trim(),
-            gender: form.elements['gender'].value,
-            password: form.elements['password'].value,
-            date_of_birth: form.elements['date_of_birth'].value,
-            address: form.elements['address'].value.trim(),
-            type_of_identification: form.elements['type_of_identification'].value,
-            identification_file: form.elements['identification_file'].value,
-            skill: form.elements['skill'].value.trim(),
-            years_of_experience: form.elements['years_of_experience'].value.trim(),
-            services_provided: form.elements['services_provided'].value.trim(),
-            scheduling: form.elements['scheduling'].value.trim(),
-            living_arrangement: form.elements['living_arrangement'].value.trim(),
-            referee_name: form.elements['referee_name'].value.trim(),
-            referee_email: form.elements['referee_email'].value.trim(),
-            referee_phone: form.elements['referee_phone'].value.trim(),
-            referee_occupation: form.elements['referee_occupation'].value.trim(),
-            relationship_with_referee: form.elements['relationship_with_referee'].value.trim()
-        };
-
-        console.log(JSON.stringify(payload))
-        xhr.send(JSON.stringify(payload));
-    });
-</script>
-
-<script>
-    const form2 = document.querySelector('.request-service-form');
-    form2.addEventListener('submit', function (e) {
-        e.preventDefault();
-
-        const xhr2 = new XMLHttpRequest();
-        xhr2.open('POST', '/auth/request-service', true);
-        xhr.setRequestHeader('Content-Type', 'application/json');
-
-        xhr2.onload = function () {
-            if (xhr2.status === 400) {
-                const response = JSON.parse(xhr2.responseText);
-                alert(response.message);
-            } else if (xhr2.status === 200) {
-                const response = JSON.parse(xhr2.responseText);
-                alert(response.message);
-            }
-        };
-
-        const payload2 = {
-            first_name: form2.elements['first_name'].value.trim(),
-            last_name: form2.elements['last_name'].value.trim(),
-            email: form2.elements['email'].value.trim(),
-            phone: form2.elements['phone'].value.trim(),
-            gender: form2.elements['gender'].value,
-            password: form2.elements['password'].value,
-            recipient_name: form2.elements['recipient_name'].value.trim(),
-            recipient_email: form2.elements['recipient_email'].value.trim(),
-            recipient_gender: form2.elements['recipient_gender'].value,
-            type_of_service: form2.elements['type_of_service'].value.trim(),
-            recipient_dob: form2.elements['recipient_dob'].value,
-            recipient_address: form2.elements['recipient_address'].value.trim(),
-            health_condition: form2.elements['health_condition'].value.trim(),
-            prefered_service_schedule: form2.elements['prefered_service_schedule'].value.trim(),
-            preferred_start_date: form2.elements['preferred_start_date'].value
-        };
-
-        console.log(JSON.stringify(payload2))
-        xhr2.send(JSON.stringify(payload2));
-    });
-</script>
-
 
 <script>
     const caregiverForm = document.getElementById('caregiverForm');

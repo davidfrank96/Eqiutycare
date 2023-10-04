@@ -8,35 +8,36 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <link rel="manifest" href="https://devsnews.com/template/pairgiver/pairgiver/site.webmanifest/">
-    <link rel="shortcut icon" type="image/x-icon" href="assets/img/favicon.ico">
+    <link rel="shortcut icon" type="image/x-icon" href="/assets/img/favicon.ico">
     <!-- Place favicon.ico in the root directory -->
 
     <!-- CSS here -->
-    <link rel="stylesheet" href="assets/css/bootstrap.min.css">
-    <link rel="stylesheet" href="assets/css/owl.carousel.min.css">
-    <link rel="stylesheet" href="assets/css/animate.css">
-    <link rel="stylesheet" href="assets/css/magnific-popup.css">
-    <link rel="stylesheet" href="assets/css/all.min.css">
-    <link rel="stylesheet" href="assets/css/flaticon.css">
-    <link rel="stylesheet" href="assets/css/font.css">
-    <link rel="stylesheet" href="assets/css/themify-icons.css">
-    <link rel="stylesheet" href="assets/css/metisMenu.css">
-    <link rel="stylesheet" href="assets/css/nice-select.css">
-    <link rel="stylesheet" href="assets/css/slick.css">
-    <link rel="stylesheet" href="assets/css/main.css">
+    <link rel="stylesheet" href="/assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/assets/css/owl.carousel.min.css">
+    <link rel="stylesheet" href="/assets/css/animate.css">
+    <link rel="stylesheet" href="/assets/css/magnific-popup.css">
+    <link rel="stylesheet" href="/assets/css/all.min.css">
+    <link rel="stylesheet" href="/assets/css/flaticon.css">
+    <link rel="stylesheet" href="/assets/css/font.css">
+    <link rel="stylesheet" href="/assets/css/themify-icons.css">
+    <link rel="stylesheet" href="/assets/css/metisMenu.css">
+    <link rel="stylesheet" href="/assets/css/nice-select.css">
+    <link rel="stylesheet" href="/assets/css/slick.css">
+    <link rel="stylesheet" href="/assets/css/main.css">
 </head>
 
 <body>
     <!-- preloader -->
-    <div id="preloader">
+    <!-- <div id="preloader">
         <div class="preloader">
             <span></span>
             <span></span>
         </div>
-    </div>
+    </div> -->
     <!-- preloader end  -->
     <!-- header-area start -->
     <header id="top-menu">
+        <% if (!userSession) { %>
         <div class="header-top-area theme-bg pt-10 pb-10 d-none d-lg-block">
             <div class="container custom-container">
                 <div class="header-top-bg">
@@ -46,7 +47,7 @@
                         <div class="col-xl-6 col-lg-6">
                             <div class="top-right-nav text-right">
                                 <ul>
-                                    <li><a href="/client-login">Employee-In-Service</a></li>
+                                    <li><a href="/caregiver-login">Employee-In-Service</a></li>
                                     <li><a href="/admin-login">Administrator</a></li>
                                     <li><a href="/terms-and-conditions">Terms & Conditions</a></li>
                                 </ul>
@@ -56,13 +57,14 @@
                 </div>
             </div>
         </div>
+        <% } %>
         <div class="main-header-area">
             <div class="container custom-container">
                 <div class="main-header-bg">
                     <div class="row align-items-center justify-content-between">
                         <div class="col-xl-2 col-lg-3 col-md-6 col-6">
                             <div class="logo">
-                                <a class="logo-img" href="/"><img src="assets/img/logo/Equity.png"
+                                <a class="logo-img" href="/"><img src="/assets/img/logo/Equity.png"
                                         alt=""></a>
                             </div>
                         </div>
@@ -87,9 +89,15 @@
                                 </a>
                             </div>
                             <div class="main-header-right-one d-none d-xl-block d-xl-flex align-items-center ">
-                                <div class="donate">
-                                    <a href="/get-started" class="theme_btn">Get Started <i class="fal fa-long-arrow-right"></i></a>
-                                </div>
+                                <% if (userSession) { %>
+                                    <div class="logout">
+                                        <a href="/logout" class="theme_btn">Logout <i class="fal fa-long-arrow-right"></i></a>
+                                    </div>
+                                <% } else { %>
+                                    <div class="donate">
+                                        <a href="/get-started" class="theme_btn">Get Started <i class="fal fa-long-arrow-right"></i></a>
+                                    </div>
+                                <% } %>
                                
                             </div>
                         </div>
@@ -173,28 +181,28 @@
 
 
     <!-- JS here -->
+    <script src="assets/js/vendor/jquery-3.3.1.min"></script>
     <script data-cfasync="false" src="../../../cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script src="assets/js/vendor/modernizr-3.5.0.min.js"></script>
-    <script src="assets/js/vendor/jquery-1.12.4.min.js"></script>
-    <script src="assets/js/popper.min.js"></script>
-    <script src="assets/js/bootstrap.min.js"></script>
-    <script src="assets/js/owl.carousel.min.js"></script>
-    <script src="assets/js/isotope.pkgd.min.js"></script>
-    <script src="assets/js/one-page-nav-min.js"></script>
-    <script src="assets/js/slick.min.js"></script>
-    <script src="assets/js/jquery.meanmenu.min.js"></script>
-    <script src="assets/js/metisMenu.min.js"></script>
-    <script src="assets/js/jquery.nice-select.js"></script>
-    <script src="assets/js/ajax-form.js"></script>
-    <script src="assets/js/wow.min.js"></script>
-    <script src="assets/js/jquery.counterup.min.js"></script>
-    <script src="assets/js/waypoints.min.js"></script>
-    <script src="assets/js/jquery.scrollUp.min.js"></script>
-    <script src="assets/js/imagesloaded.pkgd.min.js"></script>
-    <script src="assets/js/jquery.magnific-popup.min.js"></script>
-    <script src="assets/js/jquery.easypiechart.js"></script>
-    <script src="assets/js/tilt.jquery.js"></script>
-    <script src="assets/js/plugins.js"></script>
+    <script src="/assets/js/popper.min.js"></script>
+    <script src="/assets/js/bootstrap.min.js"></script>
+    <script src="/assets/js/owl.carousel.min.js"></script>
+    <script src="/assets/js/isotope.pkgd.min.js"></script>
+    <script src="/assets/js/one-page-nav-min.js"></script>
+    <script src="/assets/js/slick.min.js"></script>
+    <script src="/assets/js/jquery.meanmenu.min.js"></script>
+    <script src="/assets/js/metisMenu.min.js"></script>
+    <script src="/assets/js/jquery.nice-select.js"></script>
+    <script src="/assets/js/ajax-form.js"></script>
+    <script src="/assets/js/wow.min.js"></script>
+    <script src="/assets/js/jquery.counterup.min.js"></script>
+    <script src="/assets/js/waypoints.min.js"></script>
+    <script src="/assets/js/jquery.scrollUp.min.js"></script>
+    <script src="/assets/js/imagesloaded.pkgd.min.js"></script>
+    <script src="/assets/js/jquery.magnific-popup.min.js"></script>
+    <script src="/assets/js/jquery.easypiechart.js"></script>
+    <script src="/assets/js/tilt.jquery.js"></script>
+    <script src="/assets/js/plugins.js"></script>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDC3Ip9iVC0nIxC6V14CKLQ1HZNF_65qEQ"></script>
-    <script src="assets/js/main.js"></script>
+    <script src="/assets/js/main.js"></script>
 </body>
 </html>

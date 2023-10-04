@@ -48,7 +48,7 @@ exports.ratepage = async(req, res) =>{
 
 exports.getstartedpage = async(req, res) =>{
     try {
-        res.render('get-started', {title: 'Equitycare Global | Get Started'});
+        res.render('get-started', {title: 'Equitycare Global | Get Started', error: ''});
     } catch (error) {
         res.status(500).send({message: error.message || "Error occured"});
     }
@@ -56,7 +56,8 @@ exports.getstartedpage = async(req, res) =>{
 
 exports.clientLogin = async(req, res) =>{
     try {
-        res.render('client-login', {title: 'Equitycare Global | Login'});
+        const message = req.query.message || '';
+        res.render('client-login', {title: 'Equitycare Global | Login', message, error: ''});
     } catch (error) {
         res.status(500).send({message: error.message || "Error occured"});
     }
@@ -64,7 +65,8 @@ exports.clientLogin = async(req, res) =>{
 
 exports.caregiverLogin = async(req, res) =>{
     try {
-        res.render('caregiver-login', {title: 'Equitycare Global | Login'});
+        const message = req.query.message || '';
+        res.render('caregiver-login', {title: 'Equitycare Global | Login', message, error: ''});
     } catch (error) {
         res.status(500).send({message: error.message || "Error occured"});
     }
@@ -72,15 +74,7 @@ exports.caregiverLogin = async(req, res) =>{
 
 exports.adminLogin = async(req, res) =>{
     try {
-        res.render('admin-login', {title: 'Equitycare Global | Login'});
-    } catch (error) {
-        res.status(500).send({message: error.message || "Error occured"});
-    }
-}
-
-exports.caregiverOtp = async(req, res) =>{
-    try {
-        res.render('caregiver-otp', {title: 'Equitycare Global | Verify OTP'});
+        res.render('admin-login', {title: 'Equitycare Global | Login', error: ''});
     } catch (error) {
         res.status(500).send({message: error.message || "Error occured"});
     }
@@ -88,7 +82,17 @@ exports.caregiverOtp = async(req, res) =>{
 
 exports.clientOtp = async(req, res) =>{
     try {
-        res.render('client-otp', {title: 'Equitycare Global | Verify OTP'});
+        const email = req.query.email || '';
+        res.render('client-otp', {title: 'Equitycare Global | Verify OTP', email:email, error:''});
+    } catch (error) {
+        res.status(500).send({message: error.message || "Error occured"});
+    }
+}
+
+exports.caregiverOtp = async(req, res) =>{
+    try {
+        const email = req.query.email || '';
+        res.render('caregiver-otp', {title: 'Equitycare Global | Verify OTP', email:email, error:''});
     } catch (error) {
         res.status(500).send({message: error.message || "Error occured"});
     }
@@ -96,8 +100,18 @@ exports.clientOtp = async(req, res) =>{
 
 exports.adminOtp = async(req, res) =>{
     try {
-        res.render('admin-otp', {title: 'Equitycare Global | Verify OTP'});
+        const email = req.query.email || '';
+        res.render('admin-otp', {title: 'Equitycare Global | Verify OTP', email:email, error:''});
     } catch (error) {
         res.status(500).send({message: error.message || "Error occured"});
     }
 }
+
+exports.logout = (req, res) => {
+    req.session.destroy((err) => {
+      if (err) {
+        console.error('Error destroying session:', err);
+      }
+      res.redirect('/');
+    });
+};

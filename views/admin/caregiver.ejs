@@ -1,0 +1,42 @@
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <h1>Caregiver Profile</h1>
+                <p><strong>First Name:</strong> <%= caregiver.first_name %></p>
+                <p><strong>Last Name:</strong> <%= caregiver.last_name %></p>
+                <p><strong>Email:</strong> <%= caregiver.email %></p>
+                <p><strong>Phone:</strong> <%= caregiver.phone %></p>
+                <p><strong>Gender:</strong> <%= caregiver.gender %></p>
+                <p><strong>Date of Birth:</strong> <%= caregiver.date_of_birth %></p>
+                <p><strong>Address:</strong> <%= caregiver.address %></p>
+                <p><strong>Type of Identification:</strong> <%= caregiver.type_of_identification %></p>
+                <p><strong>Skills:</strong> <%= caregiver.skill %></p>
+                <p><strong>Years of Experience:</strong> <%= caregiver.years_of_experience %></p>
+            </div>
+            <div class="col-md-6">
+                <!-- Display the identification file here -->
+                <img src="/<%= caregiver.identification_file %>" alt="Identification File" width="300">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <h2>Services</h2>
+                <p><strong>Services Provided:</strong> <%= caregiver.services_provided %></p>
+                <p><strong>Scheduling:</strong> <%= caregiver.scheduling %></p>
+                <p><strong>Living Arrangement:</strong> <%= caregiver.living_arrangement %></p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <h2>Referee Information</h2>
+                <p><strong>Name:</strong> <%= caregiver.referee_name %></p>
+                <p><strong>Email:</strong> <%= caregiver.referee_email %></p>
+                <p><strong>Phone:</strong> <%= caregiver.referee_phone %></p>
+            </div>
+            <div class="col-md-6">
+                <p><strong>Occupation:</strong> <%= caregiver.referee_occupation %></p>
+                <p><strong>Relationship with Referee:</strong> <%= caregiver.relationship_with_referee %></p>
+            </div>
+        </div>
+    </div>

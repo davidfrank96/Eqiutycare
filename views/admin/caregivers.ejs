@@ -1,0 +1,33 @@
+<div class="container-fluid pt-4 px-4">
+    <div class="bg-light text-center rounded p-4">
+        <div class="d-flex align-items-center justify-content-between mb-4">
+            <h6 class="mb-0">Requested Services</h6>
+        </div>
+        <div class="table-responsive">
+            <table class="table text-start align-middle table-bordered table-hover mb-0">
+                <thead>
+                    <tr class="text-dark">
+                        <th scope="col">First Name</th>
+                        <th scope="col">Last Name</th>
+                        <th scope="col">Email</th>
+                        <th scope="col">Gender</th>
+                        <th scope="col">Services Provided</th>
+                        <th scope="col">Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% caregivers.forEach(caregiver => { %>
+                        <tr>
+                            <td><%= caregiver.first_name %></td>
+                            <td><%= caregiver.last_name %></td>
+                            <td><%= caregiver.email %></td>
+                            <td><%= caregiver.gender %></td>
+                            <td><%= caregiver.services_provided %></td>
+                            <td><a class="btn btn-sm btn-primary" href="/admin/caregivers/<%= caregiver.id %>">Detail</a></td>
+                        </tr>
+                    <% }); %>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,21 @@
+<div class="container">
+    <h1>Client Details</h1>
+    <div class="card">
+        <div class="card-body">
+            <h5 class="card-text">Name: <%= client.first_name %> <%= client.last_name %></h5>
+            <p class="card-text">Email: <%= client.email %></p>
+            <p class="card-text">Phone: <%= client.phone %></p>
+            <p class="card-text">Gender: <%= client.gender %></p>
+            <p class="card-text">Type of Service: <%= client.type_of_service %></p>
+            <p class="card-text">Health Condition: <%= client.health_condition %></p>
+            <p class="card-text">Recipient Name: <%= client.recipient_name %></p>
+            <p class="card-text">Recipient Email: <%= client.recipient_email %></p>
+            <p class="card-text">Recipient Gender: <%= client.recipient_gender %></p>
+            <p class="card-text">Recipient Date of Birth: <%= client.recipient_dob %></p>
+            <p class="card-text">Recipient Address: <%= client.recipient_address %></p>
+            <p class="card-text">Preferred Start Date: <%= client.preferred_start_date %></p>
+            <p class="card-text">Preferred Service Schedule: <%= client.prefered_service_schedule %></p>
+            <p class="card-text">Payment Status: <%= client.payment_status === '1' ? 'Paid' : 'Not Paid' %></p>
+        </div>
+    </div>
+</div>

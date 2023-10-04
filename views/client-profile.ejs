@@ -1,0 +1,55 @@
+<section class="help-area-02 border-style pb-100">
+    <div class="container">
+        <div class="row">
+            <div class="col-xl-6 offset-xl-3">
+                <div class="section-title text-center mb-70">
+                    <h6 class="mb-20"><i class="far fa-plus"></i> Your Profile <i class="far fa-plus"></i>
+                    </h6>
+                    <h2>Enjoy up to 5% discount of Annual Service fee payments </h2>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xl-6 col-lg-6 col-md-6">
+                <div class="helps help-02 text-center mb-30">
+                    <div class="helps__img">
+                        <div class="help-btn-box">
+                        </div>
+                    </div>
+                    <div class="helps__content">                        
+                        <h2>Your Profile</h2>
+                        <p>Name: <%= client.first_name %> <%= client.last_name %></p>
+                        <p>Email: <%= client.email %></p>
+                        <p>Phone: <%= client.phone %></p>
+                        <p>Gender: <%= client.gender %></p>
+                        <p>Type of Service: <%= client.type_of_service %></p>
+                        <p>Health Condition: <%= client.health_condition %></p>
+                        <p>Payment Status: <%= client.payment_status === '1' ? 'Paid' : 'Not Paid' %></p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-6 col-lg-6 col-md-6">
+                <div class="helps help-02 text-center mb-30">
+                    <div class="helps__img">
+                        <div class="help-btn-box">
+                        </div>
+                    </div>
+                    <div class="helps__content">                      
+                        <h2>Recipient Details</h2>
+                        <p>Name: <%= client.recipient_name %></p>
+                        <p>Email: <%= client.recipient_email %></p>
+                        <p>Gender: <%= client.recipient_gender %></p>
+                        <p>Date of Birth: <%= client.recipient_dob %></p>
+                        <p>Address: <%= client.recipient_address %></p>
+                        <p>Preferred Start Date: <%= client.preferred_start_date %></p>
+                        <p>Preferred Service Schedule: <%= client.prefered_service_schedule %></p>
+                        <div class="border-line pos-rel"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+    </div>
+</section>
